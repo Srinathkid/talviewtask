@@ -46,16 +46,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*get_songs_list_call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                System.out.println("API Response : " + response.body());
-            }
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                System.out.println("API Response : " + t.getMessage());
-            }
-        });*/
     }
 }
