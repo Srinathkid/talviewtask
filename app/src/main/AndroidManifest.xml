@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
 
     <application
@@ -25,7 +26,9 @@
         <service android:name=".Service.DownloadService"></service>
 
         <activity android:name=".Activities.SongsDetails"></activity>
+
         <service android:name=".Service.MediaPlayerService" />
+        <service android:name=".Service.AudioService" />
     </application>
 
 </manifest>

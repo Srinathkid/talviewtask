@@ -306,6 +306,7 @@ public class MediaPlayerService extends Service {
         } else if (mediaPlayer != null) {
             mediaPlayer.reset();
         }*/
+        mSession.release();
         stopService();
 //        mMediaPlayer.stop();
         mMediaPlayer.reset();

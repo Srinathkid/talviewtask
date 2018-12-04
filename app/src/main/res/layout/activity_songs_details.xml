@@ -5,106 +5,100 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textview"
-        android:layout_width="wrap_content"
+        android:id="@+id/title_txt"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Music Palyer"
-        android:textSize="35dp" />
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="Media Player"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
 
-    <TextView
-        android:id="@+id/song_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textview"
-        android:layout_centerHorizontal="true"
-        android:text="Sample Songs"
+        />
 
-        android:textSize="25dp" />
+
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/song_title"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/song_img"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@+id/title_txt"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
         android:src="@drawable/ic_launcher_background" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="@string/play" />
+        android:background="#dedede">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/button"
-        android:text="@string/pause" />
+        <TextView
+            android:id="@+id/curr_time_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="10dp"
+            android:text="sec"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button2"
-        android:layout_toEndOf="@+id/button2"
-        android:layout_toRightOf="@+id/button2"
-        android:text="@string/forward" />
+        <TextView
+            android:id="@+id/total_time_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:text="sec"
+            android:textColor="@android:color/black" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button3"
-        android:layout_toEndOf="@+id/button3"
-        android:layout_toRightOf="@+id/button3"
-        android:text="@string/rewind" />
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/total_time_txt"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="10dp" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
-        android:layout_alignEnd="@+id/textview"
-        android:layout_alignLeft="@+id/textview"
-        android:layout_alignRight="@+id/textview"
-        android:layout_alignStart="@+id/textview" />
+        <LinearLayout
+            android:id="@+id/media_control_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/seekbar"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/seekBar"
-        android:layout_toLeftOf="@+id/song_title"
-        android:layout_toStartOf="@+id/song_title"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+            <ImageView
+                android:id="@+id/previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/prev_ic" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/seekBar"
-        android:layout_alignEnd="@+id/button4"
-        android:layout_alignRight="@+id/button4"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:visibility="visible" />
+            <ImageView
+                android:id="@+id/pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/pause_ic"
+                android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/play_ic" />
 
+            <ImageView
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/next_ic" />
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

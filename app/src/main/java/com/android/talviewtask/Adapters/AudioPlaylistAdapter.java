@@ -46,7 +46,7 @@ public class AudioPlaylistAdapter extends RecyclerView.Adapter<AudioPlaylistAdap
         viewHolder.video_thumb_img.layout(0, 0, 0, 0);
         Glide.with(context)
                 .load(videoModel.getThumbnail())
-                .asBitmap()
+
                 .placeholder(R.drawable.thumb_img)
                 .error(R.drawable.thumb_img)
                 .into(viewHolder.video_thumb_img);
