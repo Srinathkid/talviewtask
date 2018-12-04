@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,7 @@ import com.android.talviewtask.Adapters.AudioPlaylistAdapter;
 import com.android.talviewtask.Model.Songs;
 import com.android.talviewtask.Model.SongsLists;
 import com.android.talviewtask.R;
-import com.android.talviewtask.Utils.DownloadService;
+import com.android.talviewtask.Service.DownloadService;
 import com.android.talviewtask.Utils.RestClient;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -68,7 +67,7 @@ AudioPlaylistAdapter audioPlaylistAdapter;
 
 
                 System.out.println("API Response Size : " + songsArrayList.size());
-                /*Intent intent = new Intent(MainActivity.this, DownloadService.class);
+               /* Intent intent = new Intent(MainActivity.this, DownloadService.class);
                 intent.putParcelableArrayListExtra(DownloadService.SONG_LIST, (ArrayList<? extends Parcelable>) songsArrayList);
                 startService(intent);*/
 

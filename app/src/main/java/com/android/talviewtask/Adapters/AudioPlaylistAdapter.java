@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.talviewtask.Activities.SongsDetails;
 import com.android.talviewtask.Model.SongsLists;
 import com.android.talviewtask.R;
 import com.bumptech.glide.Glide;
@@ -51,15 +52,15 @@ public class AudioPlaylistAdapter extends RecyclerView.Adapter<AudioPlaylistAdap
                 .into(viewHolder.video_thumb_img);
 
         viewHolder.title.setText(audio_list.get(i).getTitle());
-       /* viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, VideoPlayActivity.class);
-                intent.putExtra("video_id", audio_list.get(i).getId());
-                intent.putParcelableArrayListExtra("video_list", (ArrayList<? extends Parcelable>) audio_list);
+                Intent intent = new Intent(context, SongsDetails.class);
+                intent.putExtra("audio_id", audio_list.get(i).getId());
+                intent.putParcelableArrayListExtra("audio_list", (ArrayList<? extends Parcelable>) audio_list);
                 context.startActivity(intent);
             }
-        });*/
+        });
     }
 
     @Override

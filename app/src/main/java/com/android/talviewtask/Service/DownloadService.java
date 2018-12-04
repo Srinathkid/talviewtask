@@ -1,4 +1,4 @@
-package com.android.talviewtask.Utils;
+package com.android.talviewtask.Service;
 
 import android.app.Activity;
 import android.app.IntentService;
@@ -56,6 +56,7 @@ public class DownloadService extends IntentService {
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
                 + "/AudioFile");
+        System.out.println("Download Path : " + root);
         if (!root.exists())
             root.mkdir();
         System.out.println("Download Service : " + songsLists.size());
