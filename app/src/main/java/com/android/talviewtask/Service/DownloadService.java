@@ -29,8 +29,8 @@ public class DownloadService extends IntentService {
     private NotificationCompat.Builder mBuilder;
     public static final String RESULT = "result";
     public static final String NOTIFICATION = "service receiver";
-    public static final String FILEPATH = "filepath";
-
+    public static final String COUNT = "count";
+    public static int count = 0;
     public static final String SONG_LIST = "song_list";
     ArrayList<SongsLists> songsLists;
 
@@ -137,7 +137,9 @@ public class DownloadService extends IntentService {
                     nm.notify(12, mBuilder.build());
                     Intent i = new Intent(NOTIFICATION);
                     i.putExtra(RESULT, Activity.RESULT_OK);
+                    i.putExtra(COUNT, count);
                     sendBroadcast(i);
+                    count++;
                 }
             };
 

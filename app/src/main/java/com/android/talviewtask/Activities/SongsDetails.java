@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,7 +45,8 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
     private ArrayList<String> songs = new ArrayList<>();
     private int currentPosition = 0;
     int currProgress;
-
+    SharedPreferences sharedpreferences;
+    public static final String SONG_PREFRENCE = "song_prefrence";
     private AudioServiceBinder audioServiceBinder = null;
 
     private Handler audioProgressUpdateHandler = null;
@@ -86,17 +89,36 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_songs_details);
         bindAudioService();
-
+        sharedpreferences = getSharedPreferences(SONG_PREFRENCE, Context.MODE_PRIVATE);
         Bundle extras = getIntent().getExtras();
         if (extras == null)
             finish();
 
         setResources();
         songsArrayList = extras.getParcelableArrayList("audio_list");
-        currentPosition = extras.getInt("current_index");
+        currentPosition = extras.getInt("audio_pos");
         updateSongList();
 
         setControls(false);
+        setUI();
+
+        seekbar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+        /*if (sharedpreferences.contains("curr_index")) {
+            int tmp_curr_index = sharedpreferences.getInt("curr_index", 0);
+            if (!(tmp_curr_index == currentPosition)) {
+//                playSong(songsArrayList.get(currentPosition).getTitle());
+                setControls(true);
+            }else{
+                stopSong();
+                setControls(false);
+            }
+
+        }*/
 
 //        final String audioFileUrl = "http://www.dev2qa.com/demo/media/test.mp3";
 
@@ -172,7 +194,7 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
         int id = view.getId();
 
         if (id == R.id.play) {
-
+            stopSong();
             playSong(songsArrayList.get(currentPosition).getTitle());
 
         } else if (id == R.id.pause) {
@@ -187,6 +209,12 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
     private void playSong(String audio_name) {
         setUI();
         setControls(true);
+
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+
+        editor.putInt("curr_index", currentPosition);
+
+        editor.commit();
         audioServiceBinder.setAudioFileUrl(audioFileUrl + audio_name + ".mp3");
 //        audioServiceBinder.setAudioFileUrl("/storage/emulated/0/AudioFile/Transformers.mp3");
 
@@ -339,53 +367,11 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-//        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mBroadcastReceiver, new IntentFilter("Broadcast"));
-    }
-
-    /* private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-         @Override
-         public void onReceive(Context context, Intent intent) {
-             String intentType = intent.getStringExtra("INTENT_TYPE");
-             if (intentType.equalsIgnoreCase("SEEKBAR_RESULT")) {
-                 double percentage = intent.getDoubleExtra("PERCENTAGE", 0);
-                 double duration = intent.getDoubleExtra("DURATION", 0);
-                 int firsttime = intent.getIntExtra("INIT", 0);
-                 currentPosition = intent.getIntExtra("CURRENT_POSITION", 0);
-                 String song_title = intent.getStringExtra("SONG_NAME");
-                 setSeekBar(percentage, duration, firsttime, song_title);
-             }
-         }
-     };
- */
-    private void setSeekBar(final double percentage, double duration, int firsttime, String song_title) {
-
-     /*   seekbar.setMax((int) duration);
-        tx1.setText(String.format("%d : %d ",
-                TimeUnit.MILLISECONDS.toMinutes((long) percentage),
-                TimeUnit.MILLISECONDS.toSeconds((long) percentage) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
-                                toMinutes((long) percentage)))
-        );
-//        if (firsttime == 0) {
-        tx2.setText(String.format("%d : %d ",
-                TimeUnit.MILLISECONDS.toMinutes((long) duration),
-                TimeUnit.MILLISECONDS.toSeconds((long) duration) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
-                                duration)))
-        );
-
-        seekbar.setProgress((int) percentage);
-        song_title_txt.setText(song_title);*/
-
     }
 
 
     private void nextSong() {
-       /* if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-        } else if (mediaPlayer != null) {
-            mediaPlayer.reset();
-        }*/
+
         if (++currentPosition >= songs.size()) {
             currentPosition = 0;
         } else {
@@ -401,19 +387,5 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-   /* private Runnable UpdateSongTime = new Runnable() {
-        public void run() {
-//            startTime = mediaPlayer.getCurrentPosition();
-            tx1.setText(String.format("%d : %d ",
-                    TimeUnit.MILLISECONDS.toMinutes((long) startTime),
-                    TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
-                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
-                                    toMinutes((long) startTime)))
-            );
-            seekbar.setProgress((int) startTime);
-            myHandler.postDelayed(this, 100);
-        }
-    };
-*/
 
 }

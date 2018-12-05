@@ -57,6 +57,7 @@ public class AudioPlaylistAdapter extends RecyclerView.Adapter<AudioPlaylistAdap
             public void onClick(View v) {
                 Intent intent = new Intent(context, SongsDetails.class);
                 intent.putExtra("audio_id", audio_list.get(i).getId());
+                intent.putExtra("audio_pos",i);
                 intent.putParcelableArrayListExtra("audio_list", (ArrayList<? extends Parcelable>) audio_list);
                 context.startActivity(intent);
             }
