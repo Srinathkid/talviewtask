@@ -1,6 +1,8 @@
 package com.android.talviewtask.Service;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -18,7 +20,8 @@ import java.io.IOException;
 public class AudioServiceBinder extends Binder {
     // Save local audio file uri ( local storage file. ).
     private Uri audioFileUri = null;
-
+    public static String NOTIFICATION = "update_UI";
+    public static String CURRENT_PROGRESS = "current_progress";
     // Save web audio file url.
     private String audioFileUrl = "";
 

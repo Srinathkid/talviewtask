@@ -52,14 +52,15 @@
             android:text="sec"
             android:textColor="@android:color/black" />
 
-        <SeekBar
+        <ProgressBar
             android:id="@+id/seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/total_time_txt"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
-            
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:max="100"
             android:layout_marginRight="20dp"
             android:padding="10dp" />
 

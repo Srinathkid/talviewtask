@@ -1,5 +1,6 @@
 package com.android.talviewtask.Activities;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -29,6 +30,7 @@ import com.android.talviewtask.Model.SongsLists;
 import com.android.talviewtask.R;
 import com.android.talviewtask.Service.AudioService;
 import com.android.talviewtask.Service.AudioServiceBinder;
+import com.android.talviewtask.Service.DownloadService;
 import com.android.talviewtask.Service.MediaPlayerService;
 import com.bumptech.glide.Glide;
 
@@ -47,6 +49,8 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
     int currProgress;
     SharedPreferences sharedpreferences;
     public static final String SONG_PREFRENCE = "song_prefrence";
+    public static String NOTIFICATION = "update_UI";
+    public static String CURRENT_PROGRESS = "current_progress";
     private AudioServiceBinder audioServiceBinder = null;
 
     private Handler audioProgressUpdateHandler = null;
@@ -55,7 +59,8 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
     private ProgressBar backgroundAudioProgress;
 
     private TextView audioFileUrlTextView;
-    SeekBar seekbar;
+    //    SeekBar seekbar;
+    ProgressBar seekbar;
     ImageView play_btn, pause_btn, next_btn, prev_btn, song_img;
     TextView curr_txt, total_txt, title_txt;
     // This service connection object is the bridge between activity and background service.
@@ -125,6 +130,7 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
     private void setControls(boolean isPlaying) {
         if (isPlaying) {
             play_btn.setVisibility(View.GONE);
@@ -136,7 +142,8 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setResources() {
-        seekbar = (SeekBar) findViewById(R.id.seekbar);
+//        seekbar = (SeekBar) findViewById(R.id.seekbar);
+        seekbar = (ProgressBar) findViewById(R.id.seekbar);
         play_btn = (ImageView) findViewById(R.id.play);
         pause_btn = (ImageView) findViewById(R.id.pause);
         next_btn = (ImageView) findViewById(R.id.next);
@@ -264,11 +271,14 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
                             currProgress = audioServiceBinder.getAudioProgress();
 
                             // Update progressbar. Make the value 10 times to show more clear UI change.
-//                            backgroundAudioProgress.setProgress(currProgress * 10);
+                            seekbar.setMax(total_dur);
+                            seekbar.setProgress(currProgress * 10);
 
 //                            updateSeekBar(currProgress, total_dur);
 
-
+                           /* Intent i = new Intent(NOTIFICATION);
+                            i.putExtra(CURRENT_PROGRESS, currProgress);
+                            sendBroadcast(i);*/
 //                            myHandler.postDelayed(updateRunnable,100);
 
                         }
@@ -367,6 +377,7 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+//        registerReceiver(songreceiver, new IntentFilter(NOTIFICATION));
     }
 
 
@@ -387,5 +398,15 @@ public class SongsDetails extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private BroadcastReceiver songreceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                int currprog = bundle.getInt(CURRENT_PROGRESS);
+                seekbar.setProgress(currprog);
+            }
+        }
+    };
 
 }

@@ -1,5 +1,6 @@
 package com.android.talviewtask.Activities;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.android.talviewtask.Adapters.AudioPlaylistAdapter;
-import com.android.talviewtask.Manifest;
 import com.android.talviewtask.Model.Songs;
 import com.android.talviewtask.Model.SongsLists;
 import com.android.talviewtask.R;
@@ -113,12 +113,14 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("API Response Size : " + songsArrayList.size());
                 boolean isFirstTime = Paper.book().read("isFirstTime");
                 Paper.book().write("song_size", songsArrayList.size());
+                setAdapter();
+
                 if (!isFirstTime) {
                     downloadingDialog = new ProgressDialog(MainActivity.this);
                     downloadingDialog.setMessage("Downloading ");
-                    Intent intent = new Intent(MainActivity.this, DownloadService.class);
+                    /*Intent intent = new Intent(MainActivity.this, DownloadService.class);
                     intent.putParcelableArrayListExtra(DownloadService.SONG_LIST, (ArrayList<? extends Parcelable>) songsArrayList);
-                    startService(intent);
+                    startService(intent);*/
                 } else {
                     setAdapter();
                 }
